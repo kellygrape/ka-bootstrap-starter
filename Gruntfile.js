@@ -33,25 +33,25 @@ module.exports = function (grunt) {
       dist: {
         files: {
           'dist/assets/js/main.min.js': [
-            'dist/assets/js/bootstrap/transition.js',
-            'dist/assets/js/bootstrap/alert.js',
-            'dist/assets/js/bootstrap/button.js',
-            'dist/assets/js/bootstrap/carousel.js',
+            //'dist/assets/js/bootstrap/transition.js',
+            //'dist/assets/js/bootstrap/alert.js',
+            //'dist/assets/js/bootstrap/button.js',
+            //'dist/assets/js/bootstrap/carousel.js',
             'dist/assets/js/bootstrap/collapse.js',
-            'dist/assets/js/bootstrap/dropdown.js',
-            'dist/assets/js/bootstrap/modal.js',
-            'dist/assets/js/bootstrap/tooltip.js',
-            'dist/assets/js/bootstrap/popover.js',
-            'dist/assets/js/bootstrap/scrollspy.js',
+            //'dist/assets/js/bootstrap/dropdown.js',
+            //'dist/assets/js/bootstrap/modal.js',
+            //'dist/assets/js/bootstrap/tooltip.js',
+            //'dist/assets/js/bootstrap/popover.js',
+            //'dist/assets/js/bootstrap/scrollspy.js',
             'dist/assets/js/bootstrap/tab.js',
-            'dist/assets/js/bootstrap/affix.js',
+            //'dist/assets/js/bootstrap/affix.js',
             'dist/assets/js/*.js'
           ]
         },
         options: {
           // JS source map: to enable, uncomment the lines below and update sourceMappingURL based on your install
-           sourceMap: 'dist/assets/js/main.min.js.map',
-           sourceMappingURL: '/dist/assets/js/main.min.js.map'
+          sourceMap: 'dist/assets/js/main.min.js.map',
+          sourceMappingURL: '/dist/assets/js/main.min.js.map'
         }
       }
     },
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
       all: {
         options: {
           port: 8001,
-          hostname: "0.0.0.0",
+          hostname: '0.0.0.0',
           bases: 'dist', // Replace with the directory you want the files served from
                               // Make sure you don't use `.` or `..` in the path as Express
                               // is likely to return 403 Forbidden responses if you do
