@@ -1,7 +1,16 @@
-'use strict';
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+  'use strict';
 
   grunt.initConfig({
+    connect: {
+      'static': {
+          options: {
+              hostname: 'localhost',
+              port: 8001,
+              keepalive: true
+          }
+      }
+    },
     jshint: {
       options: {
         jshintrc: '.jshintrc'
@@ -9,7 +18,7 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'assets/js/*.js',
-        '!assets/js/scripts.min.js'
+        '!assets/js/main.min.js'
       ]
     },
     less: {
@@ -84,7 +93,7 @@ module.exports = function(grunt) {
     clean: {
       dist: [
         'assets/css/main.min.css',
-        'assets/js/scripts.min.js'
+        'assets/js/main.min.js'
       ]
     }
   });
@@ -95,6 +104,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Register tasks
   grunt.registerTask('default', [
