@@ -2,30 +2,21 @@ module.exports = function (grunt) {
   'use strict';
 
   grunt.initConfig({
-    connect: {
-      'static': {
-          options: {
-              hostname: 'localhost',
-              port: 8001,
-              keepalive: true
-          }
-      }
-    },
     jshint: {
       options: {
         jshintrc: '.jshintrc'
       },
       all: [
         'Gruntfile.js',
-        'assets/js/*.js',
-        '!assets/js/main.min.js'
+        'dist/assets/js/*.js',
+        '!dist/assets/js/main.min.js'
       ]
     },
     less: {
       dist: {
         files: {
-          'assets/css/main.min.css': [
-            'assets/less/app.less'
+          'dist/assets/css/main.min.css': [
+            'dist/assets/less/app.less'
           ]
         },
         options: {
@@ -33,42 +24,45 @@ module.exports = function (grunt) {
           // LESS source map
           // To enable, set sourceMap to true and update sourceMapRootpath based on your install
           sourceMap: true,
-          sourceMapFilename: 'assets/css/main.min.css.map',
-          sourceMapRootpath: '/'
+          sourceMapFilename: 'dist/assets/css/main.min.css.map',
+          sourceMapRootpath: '/dist/'
         }
       }
     },
     uglify: {
       dist: {
         files: {
-          'assets/js/main.min.js': [
-            'assets/js/bootstrap/transition.js',
-            'assets/js/bootstrap/alert.js',
-            'assets/js/bootstrap/button.js',
-            'assets/js/bootstrap/carousel.js',
-            'assets/js/bootstrap/collapse.js',
-            'assets/js/bootstrap/dropdown.js',
-            'assets/js/bootstrap/modal.js',
-            'assets/js/bootstrap/tooltip.js',
-            'assets/js/bootstrap/popover.js',
-            'assets/js/bootstrap/scrollspy.js',
-            'assets/js/bootstrap/tab.js',
-            'assets/js/bootstrap/affix.js',
-            'assets/js/*.js'
+          'dist/assets/js/main.min.js': [
+            'dist/assets/js/bootstrap/transition.js',
+            'dist/assets/js/bootstrap/alert.js',
+            'dist/assets/js/bootstrap/button.js',
+            'dist/assets/js/bootstrap/carousel.js',
+            'dist/assets/js/bootstrap/collapse.js',
+            'dist/assets/js/bootstrap/dropdown.js',
+            'dist/assets/js/bootstrap/modal.js',
+            'dist/assets/js/bootstrap/tooltip.js',
+            'dist/assets/js/bootstrap/popover.js',
+            'dist/assets/js/bootstrap/scrollspy.js',
+            'dist/assets/js/bootstrap/tab.js',
+            'dist/assets/js/bootstrap/affix.js',
+            'dist/assets/js/*.js'
           ]
         },
         options: {
           // JS source map: to enable, uncomment the lines below and update sourceMappingURL based on your install
-           sourceMap: 'assets/js/main.min.js.map',
-           sourceMappingURL: '/assets/js/main.min.js.map'
+           sourceMap: 'dist/assets/js/main.min.js.map',
+           sourceMappingURL: '/dist/assets/js/main.min.js.map'
         }
       }
     },
     watch: {
+      options: {
+        livereload: 5853
+      },
       less: {
         files: [
-          'assets/less/*.less',
-          'assets/less/bootstrap/*.less'
+          'dist/assets/less/*.less',
+          'dist/assets/less/bootstrap/*.less'
         ],
         tasks: ['less']
       },
@@ -77,23 +71,30 @@ module.exports = function (grunt) {
           '<%= jshint.all %>'
         ],
         tasks: ['jshint', 'uglify']
-      },
-      livereload: {
-        // Browser live reloading
-        // https://github.com/gruntjs/grunt-contrib-watch#live-reloading
+      }
+    },
+    open: {
+      all: {
+        path: 'http://localhost:<%= express.all.options.port%>'
+      }
+    },
+    express: {
+      all: {
         options: {
-          livereload: false
-        },
-        files: [
-          'assets/css/main.min.css',
-          'assets/js/scripts.min.js'
-        ]
+          port: 8001,
+          hostname: "0.0.0.0",
+          bases: 'dist', // Replace with the directory you want the files served from
+                              // Make sure you don't use `.` or `..` in the path as Express
+                              // is likely to return 403 Forbidden responses if you do
+                              // http://stackoverflow.com/questions/14594121/express-res-sendfile-throwing-forbidden-error
+          livereload: 5853
+        }
       }
     },
     clean: {
       dist: [
-        'assets/css/main.min.css',
-        'assets/js/main.min.js'
+        'dist/assets/css/main.min.css',
+        'dist/assets/js/main.min.js'
       ]
     }
   });
@@ -104,8 +105,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-
+  grunt.loadNpmTasks('grunt-express');
+  grunt.loadNpmTasks('grunt-open');
+  
   // Register tasks
   grunt.registerTask('default', [
     'clean',
@@ -113,6 +115,8 @@ module.exports = function (grunt) {
     'uglify'
   ]);
   grunt.registerTask('dev', [
+    'express',
+    'open',
     'watch'
   ]);
 
