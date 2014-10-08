@@ -9,55 +9,54 @@ module.exports = function (grunt) {
       all: [
         'Gruntfile.js',
         'dist/assets/js/*.js',
-        '!dist/assets/js/main.min.js'
+        '!dist/assets/js/bootstrap.min.js'
       ]
     },
     less: {
       dist: {
         files: {
-          'dist/assets/css/main.min.css': [
-            'dist/assets/less/app.less'
+          'dist/assets/css/main.css': [
+            'dist/assets/less/main.less'
           ]
         },
         options: {
-          compress: true,
+          compress: false,
           // LESS source map
           // To enable, set sourceMap to true and update sourceMapRootpath based on your install
           sourceMap: true,
           sourceMapFilename: 'dist/assets/css/main.min.css.map',
-          sourceMapRootpath: '/dist/'
+          sourceMapRootpath: '../'
         }
       }
     },
     uglify: {
       dist: {
         files: {
-          'dist/assets/js/main.min.js': [
-            //'dist/assets/js/bootstrap/transition.js',
-            //'dist/assets/js/bootstrap/alert.js',
-            //'dist/assets/js/bootstrap/button.js',
-            //'dist/assets/js/bootstrap/carousel.js',
-            'dist/assets/js/bootstrap/collapse.js',
-            //'dist/assets/js/bootstrap/dropdown.js',
-            //'dist/assets/js/bootstrap/modal.js',
-            //'dist/assets/js/bootstrap/tooltip.js',
-            //'dist/assets/js/bootstrap/popover.js',
-            //'dist/assets/js/bootstrap/scrollspy.js',
-            'dist/assets/js/bootstrap/tab.js',
-            //'dist/assets/js/bootstrap/affix.js',
-            'dist/assets/js/*.js'
+          'dist/assets/js/bootstrap.min.js': [
+            'dist/assets/vendor/bootstrap/js/transition.js',
+            'dist/assets/vendor/bootstrap/js/alert.js',
+            'dist/assets/vendor/bootstrap/js/button.js',
+            'dist/assets/vendor/bootstrap/js/carousel.js',
+            'dist/assets/vendor/bootstrap/js/collapse.js',
+            'dist/assets/vendor/bootstrap/js/dropdown.js',
+            'dist/assets/vendor/bootstrap/js/modal.js',
+            'dist/assets/vendor/bootstrap/js/tooltip.js',
+            'dist/assets/vendor/bootstrap/js/popover.js',
+            'dist/assets/vendor/bootstrap/js/scrollspy.js',
+            'dist/assets/vendor/bootstrap/js/tab.js',
+            'dist/assets/vendor/bootstrap/js/affix.js'
           ]
         },
         options: {
           // JS source map: to enable, uncomment the lines below and update sourceMappingURL based on your install
-          sourceMap: 'dist/assets/js/main.min.js.map',
-          sourceMappingURL: '/dist/assets/js/main.min.js.map'
+          sourceMap: 'dist/assets/js/bootstrap.min.js.map',
+          sourceMappingURL: 'dist/assets/js/main.min.js.map'
         }
       }
     },
     watch: {
       options: {
-        livereload: 5853
+        livereload: 58533
       },
       less: {
         files: [
@@ -70,7 +69,7 @@ module.exports = function (grunt) {
         files: [
           '<%= jshint.all %>'
         ],
-        tasks: ['jshint', 'uglify']
+        tasks: ['jshint', 'clean:js', 'uglify']
       }
     },
     open: {
@@ -87,13 +86,16 @@ module.exports = function (grunt) {
                               // Make sure you don't use `.` or `..` in the path as Express
                               // is likely to return 403 Forbidden responses if you do
                               // http://stackoverflow.com/questions/14594121/express-res-sendfile-throwing-forbidden-error
-          livereload: 5853
+          livereload: 58533
         }
       }
     },
     clean: {
       dist: [
         'dist/assets/css/main.min.css',
+        'dist/assets/js/main.min.js'
+      ],
+      js: [
         'dist/assets/js/main.min.js'
       ]
     }

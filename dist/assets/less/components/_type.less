@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Type
+   ========================================================================== */
+/* styles and sizes */
+.redtext, .inline-callout{
+  color:@brand-primary;
+  font-weight:bold;
+}
+h1, h2 { 
+  font-family: @frutiger67;
+  font-weight:normal;
+}
+h1, h2, h3{
+  margin-top:0;
+  margin-bottom:0;
+}
+h1 { 
+  font-size: 36px;
+  margin-top:0;
+  margin-bottom:0;
+}
+h2 { 
+  font-size: 16px;  /* should be 24px ... will have to rework */
+}
+h3 { 
+  font-size: 12px;  /* should be 18px ... will have to rework */
+}
+h4 { 
+  font-size: 14px; 
+}
+// fix superscript text alignment.  this is used on some faculty profiles.
+sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+// colors
+a	{
+  text-decoration: none; 
+  color:@brand-links; 
+}
+.not-front .contentArticle a:hover,
+.not-front .mainContent a:hover {
+	text-decoration: underline;
+}
