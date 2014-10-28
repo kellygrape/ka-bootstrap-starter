@@ -17,18 +17,47 @@ module.exports = function (grunt) {
         files: {
           'dist/assets/css/main.css': [
             'dist/assets/less/main.less'
-          ]
+          ],
         },
         options: {
           compress: false,
           // LESS source map
           // To enable, set sourceMap to true and update sourceMapRootpath based on your install
           sourceMap: true,
-          sourceMapFilename: 'dist/assets/css/main.min.css.map',
+          sourceMapFilename: 'dist/assets/css/main.css.map',
           sourceMapRootpath: '../'
         }
       }
     },
+    autoprefixer: {
+      options: {
+        browsers: [
+          'Android 2.3',
+          'Android >= 4',
+          'Chrome >= 20',
+          'Firefox >= 24', // Firefox 24 is the latest ESR
+          'Explorer >= 8',
+          'iOS >= 6',
+          'Opera >= 12',
+          'Safari >= 6'
+        ]
+      },
+      dist: {
+        options: {
+          map: true
+        },
+        src: 'dist/assets/css/main.css'
+      },
+    },
+    csslint: {
+      options: {
+        csslintrc: 'dist/assets/less/.csslintrc'
+      },
+      dist: [
+        'dist/assets/css/main.css',
+      ]
+    },
+    
     uglify: {
       dist: {
         files: {
@@ -60,10 +89,10 @@ module.exports = function (grunt) {
       },
       less: {
         files: [
-          'dist/assets/less/*.less',
-          'dist/assets/less/bootstrap/*.less'
+          'dist/assets/less/**/*.less',
+          'dist/assets/vendor/bootstrap/less/**/*.less'
         ],
-        tasks: ['less']
+        tasks: ['css-make']
       },
       js: {
         files: [
@@ -101,19 +130,16 @@ module.exports = function (grunt) {
     }
   });
 
+  
   // Load tasks
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-express');
-  grunt.loadNpmTasks('grunt-open');
+  require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
+  require('time-grunt')(grunt);
   
   // Register tasks
+  grunt.registerTask('css-make', ['less','autoprefixer','csslint']);
   grunt.registerTask('default', [
     'clean',
-    'less',
+    'css-make',
     'uglify'
   ]);
   grunt.registerTask('dev', [

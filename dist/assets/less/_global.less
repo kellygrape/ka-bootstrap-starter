@@ -2,9 +2,6 @@
     Base styling & custom mixins
  */
 
-
-@full-width: 1000px;
-
 html{
   font-size: 16px; // let me use rems!!!
 }
@@ -13,71 +10,4 @@ body {
   font-family: @font-family-sans-serif;
   font-size: 12px;
   line-height: @line-height-base;
-}
-
-// basic page structure
-// body > header, body > .contentBackground, body > .content-wrapper, body > footer
-
-#banner{
-  .makez(relative, 100);
-}
-.contentBackground{
-  .makez(absolute, -10);
-}
-.content-wrapper{
-  .makez(relative, 0);
-}
-
-
-
-// bad-practice - need to change
-ul, li{
-  margin: 0;
-  padding: 0;
-  list-style:none;
-}
-
-// make sure our images are responsive
-img {
-  .img-responsive();
-}
-.ie8 img{
-  max-width: none !important;
-}
-
-
-// Box Sizing - Just for the homepage right now
-.front, #siteFooter, .main-header {
-  &, & *{box-sizing: border-box;}
-}
-
-
-// Override normalize's H1 margin top
-h1 {
-  margin-top: 0;
-}
-
-// Full-Sized Photo Background
-.contentBackground{
-  width: 100%;
-  background: url('../img/121214campus05.jpg') no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  top: 0;
-}
-
-/* Custom Mixins */
-
-
-// Faded Semi-transparent Background with IE support
-.bgfade( @color, @fade ){
-	background-color: fadeout(@color, 100-@fade*100);
-	@rgbahex: ~`function(color, fade){var t = (Math.round(255*fade)).toString(16).toUpperCase();t=t.length==1?'0'+t:t;return '#'+t+color.substr(1)}("@{color}","@{fade}")`;
-	filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr=@{rgbahex}, endColorstr=@{rgbahex},GradientType=0 )";
-}
-.makez( @pos: relative, @zin: 0 ){
-  position: @pos;
-  z-index: @zin;
 }
